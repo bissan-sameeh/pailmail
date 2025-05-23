@@ -5,10 +5,11 @@ import 'constants.dart';
 
 mixin AwesomeDialogMixin {
   AwesomeDialog buildSuccessDialog(
-    BuildContext context,
-    String title,
-    String desc,
-  ) {
+      BuildContext context,
+      String title,
+      String desc, {
+        VoidCallback? onOk,
+      }) {
     return AwesomeDialog(
       context: context,
       dialogType: DialogType.success,
@@ -18,14 +19,33 @@ mixin AwesomeDialogMixin {
       animType: AnimType.topSlide,
       title: title,
       desc: desc,
-      // btnCancelOnPress: () {},
-      autoDismiss: true,
-      autoHide: const Duration(seconds: 2),
-
-      // btnOkOnPress: () {},
-      // btnOk: SizedBox(),
+      btnOkOnPress: onOk ?? () {},
+      autoDismiss: onOk == null ? true : false,
+      autoHide: onOk == null ? const Duration(seconds: 2) : null,
     );
   }
+   showSenderSuccessDialog({
+    required BuildContext context,
+    required String senderName,
+    required VoidCallback onOk,
+     required String title,
+     required String desc,
+  }) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.success,
+      animType: AnimType.topSlide,
+      title: title,
+      desc: desc,
+      btnOkText: "OK",
+      btnOkOnPress: onOk,
+      dismissOnTouchOutside: false,
+      dismissOnBackKeyPress: false,
+      btnOkColor: kGreenColor,
+    ).show();
+  }
+
+
 
   AwesomeDialog buildWarningDialog(
       BuildContext context, String title, Function() ok) {
@@ -43,20 +63,20 @@ mixin AwesomeDialogMixin {
       btnOkOnPress: ok,
     );
   }
-  AwesomeDialog buildFailedDialog(
+   buildFailedDialog(
       BuildContext context, String title, Function() ok) {
     return AwesomeDialog(
       context: context,
       dialogType: DialogType.error,
       borderSide: const BorderSide(color: kYellowColor, width: 1),
-      buttonsBorderRadius: BorderRadius.all(Radius.circular(2)),
+      buttonsBorderRadius: const BorderRadius.all(Radius.circular(2)),
       headerAnimationLoop: false,
       animType: AnimType.topSlide,
       title: title,
-      desc: 'Are you sure to $title?',
+      desc: '$title?',
       showCloseIcon: false,
       btnCancelOnPress: () {},
       btnOkOnPress: ok,
-    );
+    ).show();
   }
 }

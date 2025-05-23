@@ -71,15 +71,17 @@ class _LoginScreenState extends State<LoginScreen>
 
   signUp() {
     if (_formKey.currentState!.validate()) {
+
       setState(() {
         isLoginResponse = true;
       });
+
       auth
           .register(
         email: emailController.text,
         name: nameController.text,
         password: passwordController.text,
-        password_confirmation: passwordController.text,
+        password_confirmation: confirmPasswordController.text,
       )
           .then((user) async {
         // showSnackBar(
@@ -90,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen>
             .show();
 
         if (mounted) {
-          if (SharedPreferencesController().roleId == 1) {
+          if (SharedPreferencesController().roleId == '1') {
             NavigationRoutes()
                 .jump(context, Routes.guest_screen, replace: true);
           } else {
@@ -98,12 +100,19 @@ class _LoginScreenState extends State<LoginScreen>
           }
         }
       }).catchError((e) {
+
         setState(() {
           isLoginResponse = false;
           _formKey.currentState?.reset();
         });
+
         showSnackBar(context,
             message: handleErrorMessage(e.toString()), error: true);
+
+        if(e is Exception){
+          showSnackBar(context,
+              message:"confirmation is wrong!", error: true);
+        }
       });
     }
   }
@@ -126,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen>
         await buildSuccessDialog(context, 'Logged In Successfully!', '').show();
 
         if (mounted) {
-          if (SharedPreferencesController().roleId == 1) {
+          if (SharedPreferencesController().roleId == "1") {
             NavigationRoutes()
                 .jump(context, Routes.guest_screen, replace: true);
           } else {
@@ -154,6 +163,8 @@ class _LoginScreenState extends State<LoginScreen>
     } else if (e.contains('name')) {
       return 'The name field is required';
     } else if (e.contains('email has already been taken')) {
+      return 'The email has already been taken.';
+    }else if (e.contains('confirmation')) {
       return 'The email has already been taken.';
     }
     return e;
@@ -360,10 +371,13 @@ class _LoginScreenState extends State<LoginScreen>
                                         AutofillHints.password
                                       ],
                                       validator: (value) {
+
                                         if (value == null ||
                                             value.isEmpty && showSignUp) {
                                           return 'Please confirm your password'
                                               .tr();
+                                        }else if (confirmPasswordController.text !=passwordController.text && showSignUp) {
+                                          return 'Please write right confirmation!'.tr();
                                         }
 
                                         return null;

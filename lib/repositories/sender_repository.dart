@@ -15,7 +15,7 @@ import '../models/senders/senders.dart';
 class SenderRepository {
   final ApiBaseHelper _helper = ApiBaseHelper();
 
-  Future<List<Sender>?> createSender({
+  Future<List<Sender>?> createSender( {
     required String name,
     required String mobile,
     String? address,
@@ -69,8 +69,10 @@ class SenderRepository {
     // return SenderResponseModel.fromJson(response).;
     return senderMails.fromJson(response).sender!.mails;
   }
-  Future<bool> updateSender(String? name,String? mobile,String? address,int? category_id,int id) async {
-    String url = "$CRUD_senderUrl$id";
+  Future<bool> updateSender(String? name,String? mobile,String? address,int? category_id,int sender_id) async {
+    String url = "$CRUD_senderUrl$sender_id";
+    print("update");
+
     Map<String,String> map={
       'name':name!,
       'address':address??'',
@@ -78,8 +80,9 @@ class SenderRepository {
       'mobile':mobile!
 
     };
+    print("before");
     final response = await _helper.put(url,map);
-
+print("after update");
     if (response is Map<String, dynamic> && response['message'] == 'Sender updated.') {
       return true;
     } else {

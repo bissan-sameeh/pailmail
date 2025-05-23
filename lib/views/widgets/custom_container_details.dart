@@ -31,7 +31,7 @@ class _CustomContainerDetailsState extends State<CustomContainerDetails> {
   Widget build(BuildContext context) {
     //Todo:Modification  Container
     return Container(
-      width: 378.w,
+      // width: 378.w,
       // height: 190.h,
       decoration: BoxDecoration(
         color: Colors.white,

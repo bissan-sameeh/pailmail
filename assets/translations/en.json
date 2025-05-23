@@ -48,6 +48,31 @@
   "Password updated": "update change password",
   "Password has been successfully updated!": "change password done successfully",
   "New Password": "new password",
-  "Confirm Password": "Confirm new password"
+  "Confirm Password": "Confirm new password",
+  "Add Decision": "Add Decision…",
+  "Add new Activity": "Add new Activity...",
+  "sender name": "sender name",
+  "mobile number": "Mobile number",
+  "Mobile": "Mobile",
+  "category": "Category",
+  "TitleOfMail":"Title of Mail",
+  "TitleOfMailIsRequired!": "Title of mail is required!",
+  "Description": "Description",
+  "Date": "Date",
+  "Archive number is required !": "Archive number is required !",
+  "There is no decision yet!": "There is no decision yet!",
+  "add_image": "Add image",
+  "Clear All": "lear All",
+  "No images yet!": "No images yet!",
+  "Activity": "Activity",
+  "Sender Name is required": "Sender Name is required",
+  "Mobile is required": "Mobile is required",
+  "2021": "2021",
+  "Decision": "Decision",
+  "Mail Created!": "Mail Created!",
+  "Failed to create mail": "Failed to create mail"
+
+
+
 
 }

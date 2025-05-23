@@ -10,13 +10,14 @@ class CustomAppBar extends StatelessWidget {
       this.bottomPadding = 55,
       this.endPadding = 0,
       this.onTap,
-      this.isEdit = false})
+      this.isEdit = false, this.trailing})
       : super(key: key);
   final String widgetName;
   final double bottomPadding;
   final double endPadding;
   final Function()? onTap;
   final bool? isEdit;
+  final Widget? trailing;
 
 //TODO: ADD underline for app bar
   @override
@@ -34,22 +35,27 @@ class CustomAppBar extends StatelessWidget {
               },
               child: Text("Cancel",
                   style: buildAppBarTextStyle(letterSpacing: 1.2))),
-          Text(
-            widgetName,
-            style: buildAppBarTextStyle(color: kBlackColor),
+          Expanded(
+            child: Text(
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+
+              widgetName,
+              style: buildAppBarTextStyle(color: kBlackColor),
+            ),
           ),
-          InkWell(
+           InkWell(
             onTap: isEdit == false
                 ? () {
                     Navigator.pop(context);
                   }
                 : onTap,
-            child: Text(
+            child: trailing ?? Text(
               //TODO: Handle on tap navigation
               "Done",
               style: buildAppBarTextStyle(),
             ),
-          ),
+          )  ,
         ],
       ),
     );

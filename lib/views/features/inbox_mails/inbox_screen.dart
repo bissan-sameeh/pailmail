@@ -38,6 +38,7 @@ import '../../widgets/custom_container.dart';
 import '../../widgets/custom_container_details.dart';
 import '../../widgets/custom_date_container.dart';
 import '../../widgets/custom_expansion_tile.dart';
+import '../../widgets/custom_photo_container.dart';
 import '../../widgets/custom_profile_photo_container.dart';
 import '../../widgets/custom_text_field.dart';
 import '../category/category_screen.dart';
@@ -120,7 +121,7 @@ class _InboxScreenState extends State<InboxScreen>
     super.initState();
     addActivity = [];
     addNewActivityController = TextEditingController();
-    senderController = TextEditingController();
+    senderController =  TextEditingController(text: widget.mail != null ?  widget.mail?.sender?.name.toString() : '');
     addDecisionController = TextEditingController();
     archiveController = TextEditingController();
     dateController = TextEditingController();
@@ -244,6 +245,7 @@ class _InboxScreenState extends State<InboxScreen>
                   bottomPadding: 16,
                   isEdit: true,
               onTap: () async {
+
                 if (_formKey.currentState!.validate()) {
                   // خذ كل الـ Providers قبل أي async
                   // final attachmentProvider = Provider.of<AttachmentProvider>(context, listen: false);
@@ -251,103 +253,104 @@ class _InboxScreenState extends State<InboxScreen>
 
                   if (senderIndex == -1) {
 
-                      SenderRepository()
-                          .createSender(
-                          name: senderController.text,
-                          mobile: phoneController.text,
-                          categoryId: categoryId)
-                          .then((value) {
-                        showSnackBar(context, message: "Created New Sender!", duration: 1);
+                    SenderRepository()
+                        .createSender(
+                        name: senderController.text,
+                        mobile: phoneController.text,
+                        categoryId: categoryId)
+                        .then((value) {
+                      showSnackBar(context, message: "Created New Sender!", duration: 1);
 
-                        // categoriesProvider.fetchAllCategories(); // استخدم المحفوظ مسبقاً
+                      // categoriesProvider.fetchAllCategories(); // استخدم المحفوظ مسبقاً
 
-                        sender_id = value!.last.id;
+                      sender_id = value!.last.id;
 
-                        Future.delayed(const Duration(milliseconds: 500), () async {
-                          await MailsRepository()
-                              .createMail(
-                              subject: tileOfMailController.text,
-                              description: descriptionController.text,
-                              sender_id: sender_id.toString(),
-                              archive_number: archiveController.text,
-                              archive_date: DateTime.now(),
-                              status_id: saveStatusId.toString(),
-                              tags: listTag,
-                              activities: addActivity)
-                              .then((value) async {
-                            mail_id = value?.id;
+                      Future.delayed(const Duration(milliseconds: 500), () async {
+                        await MailsRepository()
+                            .createMail(
+                            subject: tileOfMailController.text,
+                            description: descriptionController.text,
+                            sender_id: sender_id.toString(),
+                            archive_number: archiveController.text,
+                            archive_date: DateTime.now(),
+                            status_id: saveStatusId.toString(),
+                            tags: listTag,
+                            activities: addActivity)
+                            .then((value) async {
+                          mail_id = value?.id;
 
-                            if (context.mounted && pickedImage != null) {
-                              await attachmentProvider.uploadAttachment(
-                                  pickedImage, mail_id.toString(), tileOfMailController.text);
-                            }
+                          if (context.mounted && pickedImage != null) {
+                            await attachmentProvider.uploadAttachment(
+                                pickedImage, mail_id.toString(), tileOfMailController.text);
+                          }
 
-                            if (context.mounted) {
-                              Navigator.pop(context, 'refresh');
+                          if (context.mounted) {
+                            Navigator.pop(context, 'refresh');
 
-                              showSnackBar(context, message: "Created Mail", duration: 2);
-                              // refresh();
-                              clear();
-                            }
-                          }).catchError((err) {
-                            if (context.mounted) {
-                              showSnackBar(context,
-                                  message: "Failed to create mail", error: true, duration: 1);
-                            }
-                          });
+                            showSnackBar(context, message: "Created Mail".tr(), duration: 2);
+                            // refresh();
+                            clear();
+                          }
+                        }).catchError((err) {
+                          if (context.mounted) {
+                            showSnackBar(context,
+                                message: "Failed to create mail".tr(), error: true, duration: 1);
+                          }
+                        });
 
                       }).catchError((err) {
                         if (context.mounted) {
-                          if (err.toString() == 'The mobile has already been taken') {
-                            showSnackBar(context,
-                                message: 'The mobile has already been taken',
-                                error: true,
-                                duration: 2);
-                          } else {
-                            showSnackBar(context, message: err.toString(), error: true, duration: 2);
+
+                          if (err.contains('email has already been taken')) {
+                            showSnackBar(context, message:  'The email has already been taken.',error: true);
                           }
                         }
                       });
                     });
                   } else {
-                      await MailsRepository()
-                          .createMail(
-                          subject: tileOfMailController.text,
-                          description: descriptionController.text,
-                          sender_id: senderIndex.toString(),
-                          archive_number: archiveController.text,
-                          archive_date: DateTime.now(),
-                          status_id: saveStatusId.toString(),
-                          tags: listTag,
-                          activities: addActivity)
-                          .then((value) async {
-                        mail_id = value?.id;
+                    await MailsRepository()
+                        .createMail(
+                        subject: tileOfMailController.text,
+                        description: descriptionController.text,
+                        sender_id: senderIndex.toString(),
+                        archive_number: archiveController.text,
+                        archive_date: DateTime.now(),
+                        status_id: saveStatusId.toString(),
+                        tags: listTag,
+                        activities: addActivity)
+                        .then((value) async {
+                      mail_id = value?.id;
 
-                        if (context.mounted && pickedImage != null) {
-                          await attachmentProvider.uploadAttachment(
-                              pickedImage, mail_id.toString(), tileOfMailController.text);
+                      if (context.mounted && pickedImage != null) {
+                        await attachmentProvider.uploadAttachment(
+                            pickedImage, mail_id.toString(), tileOfMailController.text);
+                      }
+
+                      if (context.mounted) {
+                        Navigator.pop(context, 'refresh');
+                        showSnackBar(
+                            context, message: "Mail Created!".tr(), duration: 2);
+                        // refresh();
+                        clear();
+                      }
+                    }).catchError((err) {
+                      if (context.mounted) {
+                        if (err.contains('email has already been taken')) {
+                          showSnackBar(context, message:  'The email has already been taken.',error: true);
                         }
 
-                        if (context.mounted) {
-                          Navigator.pop(context, 'refresh');
-                          showSnackBar(
-                              context, message: "Mail Created!", duration: 2);
-                          // refresh();
-                          clear();
-                        }
-                      }).catchError((err) {
-                        if (context.mounted) {
-                          print(err.toString());
-                          // showSnackBar(context,
-                          //     message: 'Failed to create mail!', error: true, duration: 1);
-                        }
-                      });
+
+
+                        print(err.toString());
+                        // showSnackBar(context,
+                        //     message: 'Failed to create mail!', error: true, duration: 1);
+                      }
+                    });
 
                   }
                 }
-              }
 
-          ),
+              },),
           Expanded(
             child: ListView(
               padding: EdgeInsets.zero,
@@ -425,7 +428,7 @@ class _InboxScreenState extends State<InboxScreen>
                               icon: const Icon(Icons.perm_identity),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Sender Name is required';
+                                  return 'Sender Name is required'.tr();
                                 }
                                 return null;
                               },
@@ -454,7 +457,7 @@ class _InboxScreenState extends State<InboxScreen>
                             customFontSize: 16,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Mobile is required';
+                                return 'Mobile is required'.tr();
                               }
                               return null;
                             },
@@ -472,7 +475,7 @@ class _InboxScreenState extends State<InboxScreen>
                                 right: 11.w),
                             child: Row(
                               children: [
-                                Text("Category",
+                                Text("category".tr(),
                                     style: buildAppBarTextStyle(
                                         color: kBlackColor,
                                         letterSpacing: 0.15,
@@ -482,7 +485,7 @@ class _InboxScreenState extends State<InboxScreen>
                                   builder: (context, categoryProvider, child) {
                                     if (categoryProvider.allCategories.status ==
                                         ApiStatus.LOADING) {
-                                      return Text("Other",
+                                      return Text("other".tr(),
                                           style: buildAppBarTextStyle(
                                               color: kDarkGreyColor,
                                               letterSpacing: 0.15,
@@ -550,10 +553,10 @@ class _InboxScreenState extends State<InboxScreen>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           CustomTextField(
-                            hintText: 'Title of mail',
+                            hintText: 'TitleOfMail'.tr(),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Title of mail is required!';
+                                return 'TitleOfMailIsRequired!'.tr();
                               }
                               return null;
                             },
@@ -563,7 +566,7 @@ class _InboxScreenState extends State<InboxScreen>
                           ),
                           const CustomDivider(),
                           CustomTextField(
-                            hintText: 'Description',
+                            hintText: 'Description'.tr(),
                             customFontSize: 14,
                             textInputType: TextInputType.multiline,
                             // للسماح بإدخال أكثر من سطر
@@ -584,7 +587,7 @@ class _InboxScreenState extends State<InboxScreen>
                     : CustomContainer(
                         childContainer: Column(children: [
                         CustomDateContainer(
-                            title: 'Date',
+                            title: 'Date'.tr(),
                             isFilterScreen: false,
                             selectedDate: _selectedDate),
                         Padding(
@@ -609,7 +612,7 @@ class _InboxScreenState extends State<InboxScreen>
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Archive Number",
+                                      "archive_number".tr(),
                                       style: buildAppBarTextStyle(
                                           color: kBlackColor,
                                           letterSpacing: 0.15,
@@ -621,10 +624,10 @@ class _InboxScreenState extends State<InboxScreen>
                                       child: CustomTextField(
                                         withoutPrefix: true,
                                         paddingHor: 0,
-                                        hintText: '2021/2022',
+                                        hintText: '2021'.tr(),
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {
-                                            return 'Archive number is required !';
+                                            return 'Archive number is required !'.tr();
                                           }
                                           return null;
                                         },
@@ -648,13 +651,14 @@ class _InboxScreenState extends State<InboxScreen>
 
                 !widget.isDetails
                     ? buildListTile(
-                        onTap: () {
+                        onTap: () async {
                           Provider.of<TagProvider>(context, listen: false)
                               .getTagList();
 
 
-                         final result=showSheet(context, const TagsScreen(
+                         final result=await showSheet(context, const TagsScreen(
                                 navFromHome: false,
+
                               ));
 
                          listTag=result;
@@ -685,7 +689,11 @@ class _InboxScreenState extends State<InboxScreen>
                     print("//////////////////////////${listTag?.length}");
                   }
 ,                        icon: Icons.tag_rounded,
-                  widget:Text("data"),
+                  widget: Text("tags".tr(),style: buildAppBarTextStyle(
+                      color: const Color(0xff272727),
+                      letterSpacing: 0.15,
+                      fontSizeController: 16.sp),
+                  ),),
 //                         widget: CustomExpansionTile(
 //                           widgetOfTile: Text("Tags",style:buildAppBarTextStyle(
 //                               color: const Color(0xff272727),
@@ -838,7 +846,7 @@ class _InboxScreenState extends State<InboxScreen>
 //
 //                           ], ),
 
-                      ),
+
 
                 SizedBox(
                   height: 12.h,
@@ -876,12 +884,12 @@ class _InboxScreenState extends State<InboxScreen>
                                           .selectedIndex <
                                       0) // to avoid null when status filter is cleared
                               {
-                                return const CustomContainer(
+                                return  CustomContainer(
                                     isInBox: true,
-                                    backgroundColor: Color(0xffFA3A57),
+                                    backgroundColor: const Color(0xffFA3A57),
                                     childContainer: Text(
-                                      "Inbox",
-                                      style: TextStyle(color: Colors.white),
+                                      "inbox".tr(),
+                                      style: const TextStyle(color: Colors.white),
                                     ));
                               } else if (statusProvider.allStatus.status ==
                                   ApiStatus.COMPLETED) {
@@ -925,7 +933,7 @@ class _InboxScreenState extends State<InboxScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Decision",
+                        "Decision".tr(),
                         style: buildAppBarTextStyle(
                             color: kBlackColor, letterSpacing: 0.15),
                       ),
@@ -939,7 +947,7 @@ class _InboxScreenState extends State<InboxScreen>
                                   : "There is no decision yet!"))
                           : CustomTextField(
                               paddingHor: 0,
-                              hintText: "Add Decision…",
+                              hintText: "Add Decision".tr(),
                               customFontSize: 14,
                               controller: addDecisionController),
                     ],
@@ -969,7 +977,7 @@ class _InboxScreenState extends State<InboxScreen>
                                     _pickedImage;
                                   },
                                   child: Text(
-                                    "Add Image",
+                                    "add_image".tr(),
                                     style: buildAppBarTextStyle(
                                         fontSizeController: 16.sp,
                                         letterSpacing: 0.15),
@@ -983,7 +991,7 @@ class _InboxScreenState extends State<InboxScreen>
                                           setState(() {});
                                         },
                                         child: Text(
-                                          "Clear All",
+                                          "Clear All".tr(),
                                           style: buildAppBarTextStyle(
                                               fontSizeController: 16.sp,
                                               letterSpacing: 0.15),
@@ -994,12 +1002,30 @@ class _InboxScreenState extends State<InboxScreen>
 
                             ///view Images
                             widget.isDetails
-                                ? widget.mail!.attachments!.isNotEmpty?CustomProfilePhotoContainer(
-                                    image:
-                                        '$imageUrl/${widget.mail!.attachments}',
-                                    raduis: 50,
-                                  )
-                                : const Column(
+                                ? widget.mail!.attachments!.isNotEmpty?
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Row(children: [
+                                //TODO: Add Gesture detector
+                                for (int i = 0; i < widget.mail!.attachments!.length; i++) ...{
+                                  CustomPhotoContainer(
+                                    raduis: 100.r,
+                                    url: '$imageUrl/${widget.mail!.attachments![i].image}',
+                                  ),
+                                  SizedBox(
+                                    width: 8.w,
+                                  ),
+                                }
+                              ]),
+                            )
+
+                      //
+                            // CustomProfilePhotoContainer(
+                            //         image:
+                            //             '$imageUrl/${widget.mail?.attachments?[0]}',
+                            //         raduis: 50,
+                            //       )
+                  : const Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
@@ -1030,7 +1056,7 @@ class _InboxScreenState extends State<InboxScreen>
                       mailNumber:
                           addActivity.isNotEmpty ? "${addActivity.length}" : "",
                       widgetOfTile: Text(
-                        "Activity",
+                        "Activity".tr(),
                         style: buildAppBarTextStyle(
                             letterSpacing: 0.15,
                             fontSizeController: 20.sp,
@@ -1076,25 +1102,27 @@ class _InboxScreenState extends State<InboxScreen>
                                               SizedBox(
                                                 width: 8.w,
                                               ),
-                                              Column(
-                                                mainAxisSize:
-                                                    MainAxisSize.max,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                      "${Provider.of<AuthProvider>(context).currentUser.data?.user.name}"),
-                                                  const SizedBox(
-                                                    height: 12,
-                                                  ),
-                                                  Text(widget.mail!
-                                                      .activities![index].body
-                                                      .toString()),
-                                                ],
+                                              Expanded(
+                                                flex: 2,
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                        "${Provider.of<AuthProvider>(context).currentUser.data?.user.name}"),
+                                                     SizedBox(
+                                                      height: 4.h,
+                                                    ),
+                                                    Text(widget.mail!
+                                                        .activities![index].body
+                                                        .toString()),
+                                                  ],
+                                                ),
                                               ),
-                                               const Spacer(),
                                               Text(
                                                   formatDate(widget.mail!.activities![index].createdAt.toString())
                                                       .split(" ")[0])
@@ -1232,7 +1260,7 @@ class _InboxScreenState extends State<InboxScreen>
                                       raduis: 40.r,
                                     ),
                                   ),
-                            hintText: "Add new Activity ...",
+                            hintText: "Add new Activity".tr(),
                             customFontSize: 14.sp,
                             controller: addNewActivityController),
                       ),

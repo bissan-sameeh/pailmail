@@ -1,10 +1,15 @@
 class AppException implements Exception {
-  final _message;
+  final dynamic _message;
   final _prefix;
 
   AppException([this._message, this._prefix]);
 
   /// prefix: the error, message: the details of error
+  String get message {
+    if (_message is String) return _message;
+    if (_message is Map && _message['message'] is String) return _message['message'];
+    return _message.toString();
+  }
 
   @override
   String toString() {

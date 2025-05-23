@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:pailmail/core/helpers/api_helpers/api_response.dart';
+import 'package:pailmail/main.dart';
 import 'package:pailmail/models/categories/category_response_model.dart';
 import 'package:pailmail/models/mails/mail.dart';
 import 'package:pailmail/repositories/categories_repositories/categories_repositry.dart';
@@ -34,7 +36,7 @@ class CategoriesProvider extends ChangeNotifier {
         allCategories.data == null ||
         categoryPosition >= allCategories.data!.length ||
         senderPosition >= allCategories.data![categoryPosition].senders!.length) {
-      return "sender name";
+      return "sender name".tr();
     }
 
     return allCategories.data![categoryPosition].senders![senderPosition].name !;
@@ -53,15 +55,15 @@ class CategoriesProvider extends ChangeNotifier {
   }
   String get senderMobileHint {
     if (senderPosition == -1 || categoryPosition == -1) {
-      return "Mobile";
+      return "mobile number".tr();
     }
 
     try {
       final category = allCategories.data?[categoryPosition];
       final sender = category?.senders?[senderPosition];
-      return sender?.mobile ?? "Mobile";
+      return sender?.mobile ?? "mobile number".tr();
     } catch (e) {
-      return "Mobile";
+      return "mobile number".tr();
     }
   }
 

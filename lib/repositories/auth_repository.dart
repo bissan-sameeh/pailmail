@@ -51,6 +51,7 @@ class AuthRepository {
       'name': name
     };
 
+
     final registerResponse = await _helper.post(registerUrl, body);
     UserResponseModel userResponseModel =
         UserResponseModel.fromJson(registerResponse);

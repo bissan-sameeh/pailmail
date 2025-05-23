@@ -59,7 +59,7 @@ class CustomPhotoContainer extends StatelessWidget {
 
 // shows progress while loading an image:
           loadingBuilder: (context, progress, chunkEvent) =>
-              Center(child: CircularProgressIndicator(value: progress,color: kBackgroundColor,)),
+              Center(child: CircularProgressIndicator(value: progress,)),
 
 // displayed when an error occurs:
           errorBuilder: (context, error) => Container(

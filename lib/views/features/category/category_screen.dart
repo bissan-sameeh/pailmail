@@ -10,7 +10,8 @@ import '../../../core/utils/constants.dart';
 import '../../widgets/custom_app_bar.dart';
 
 class CategoryScreen extends StatefulWidget {
-  const CategoryScreen({super.key});
+ final int? category_id;
+  const CategoryScreen({super.key, this.category_id});
 
   @override
   State<CategoryScreen> createState() => _CategoryScreenState();
@@ -23,6 +24,8 @@ class _CategoryScreenState extends State<CategoryScreen> with AwesomeDialogMixin
     // TODO: implement initState
     super.initState();
     Future.microtask(() {
+
+      widget.category_id !=null ?  Provider.of<CategoriesProvider>(context, listen: false).setCategoryIndex(categoryIndex: widget.category_id!) :null;
       Provider.of<CategoriesProvider>(context, listen: false).fetchAllCategories();
     });
   }

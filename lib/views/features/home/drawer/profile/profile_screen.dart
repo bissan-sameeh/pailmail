@@ -32,7 +32,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: const Text('Profile'),
         centerTitle: true,
         foregroundColor: Colors.white,
         backgroundColor: kLightBlueColor,
@@ -63,7 +63,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
           return SingleChildScrollView(
             child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Column(mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
               CustomProfileContainerImage(userImage: userImage),
               SizedBox(
                 height: 20.h,

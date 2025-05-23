@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../../../../../models/senders/sender.dart';
 import '../../../../../models/senders/senderMails.dart';
 import '../../../../widgets/custom_mail_container.dart';
+import '../../../../widgets/not_found_result.dart';
 import '../../../inbox_mails/inbox_screen.dart';
 
 class SenderMailsScreen extends StatefulWidget {
@@ -35,7 +36,7 @@ class _SenderMailsScreenState extends State<SenderMailsScreen> {
             child: Column(
               children: [
                 const CustomAppBar(widgetName: "Mails of Sender", bottomPadding: 40),
-                ListView.builder(
+                widget.mailsList==null|| widget.mailsList.isEmpty ? NotFoundResult():ListView.builder(
 
                   padding: EdgeInsets.only(bottom: 8.h),
 

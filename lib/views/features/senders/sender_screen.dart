@@ -36,7 +36,8 @@ class _SenderScreenState extends State<SenderScreen> with AwesomeDialogMixin{
     // TODO: implement initState
     super.initState();
     searchController = TextEditingController();
-    Provider.of<CategoriesProvider>(context,listen: false).fetchAllCategories();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) =>     Provider.of<CategoriesProvider>(context,listen: false).fetchAllCategories()
+      ,);
 
 
   }

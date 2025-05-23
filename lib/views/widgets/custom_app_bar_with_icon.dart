@@ -100,80 +100,90 @@ class _CustomAppBarWithIconState extends State<CustomAppBarWithIcon> with Awesom
                             height: 33.h,
                           ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                width: 112.w,
-                                // height: 103.h,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: kWhiteColor),
-                                child: Padding(
-                                  padding: REdgeInsetsDirectional.all(33.h),
-                                  child: Column(
-                                    children: [
-                                      const Icon(
-                                        Icons.archive,
-                                        color: kDarkGreyColor,
-                                      ),
-                                      SizedBox(height: 4.h,),
-                                      const Text("archive"),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                width: 112.w,
-                                // height: 103.h,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: kWhiteColor),
-                                child: Padding(
-                                  padding: REdgeInsetsDirectional.all(33.h),
-                                  child: Column(
-                                    children: [
-                                      const Icon(
-                                        Icons.share,
-                                        color: kLightBlueColor,
-                                      ),
-                                      SizedBox(height: 4.h,),
+                              Expanded(
+                                child: Container(
 
-                                      const Text("share"),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                width: 112.w,
-                                // height: 103.h,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: kWhiteColor),
-                                child: Padding(
-                                  padding: REdgeInsetsDirectional.all(33.h),
-                                  child: InkWell(
-                                    onTap: () async {
-                                      showDeleteConfirmationDialog(context,widget.id!);
-
-
-                                    }
-                                        // print('Error deleting sender: $e');
-                                        // عرض رسالة خطأ للمستخدم هنا
-
-
-                                    ,
-
-
-                                    child:  Column(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: kWhiteColor),
+                                  child: Padding(
+                                    padding: REdgeInsetsDirectional.all(31.h),
+                                    child: Column(
                                       children: [
                                         const Icon(
-                                          Icons.delete,
-                                          color: kRedColor,
+                                          Icons.archive,
+                                          color: kDarkGreyColor,
+                                        ),
+                                        SizedBox(height: 4.h,),
+                                        const Text("archive"),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 4.w,
+                              ),
+                              Expanded(
+                                child: Container(
+                                  // padding: REdgeInsetsDirectional.all(33.h),
+
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: kWhiteColor),
+                                  child: Padding(
+                                    padding: REdgeInsetsDirectional.all(33.h),
+                                    child: Column(
+                                      children: [
+                                        const Icon(
+                                          Icons.share,
+                                          color: kLightBlueColor,
                                         ),
                                         SizedBox(height: 4.h,),
 
-                                        const Text("delete"),
+                                        const Text("share"),
                                       ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 4.w,
+                              ),
+                              Expanded(
+                                child: Container(
+
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: kWhiteColor),
+                                  child: Padding(
+                                    padding: REdgeInsetsDirectional.all(33.h),
+                                    child: InkWell(
+                                      onTap: () async {
+                                        showDeleteConfirmationDialog(context,widget.id!);
+                                
+                                
+                                      }
+                                          // print('Error deleting sender: $e');
+                                          // عرض رسالة خطأ للمستخدم هنا
+                                
+                                
+                                      ,
+                                
+                                
+                                      child:  Column(
+                                        children: [
+                                          const Icon(
+                                            Icons.delete,
+                                            color: kRedColor,
+                                          ),
+                                          SizedBox(height: 4.h,),
+                                
+                                          const Text("delete"),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),

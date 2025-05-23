@@ -5,6 +5,7 @@ import 'constants.dart';
 mixin ShowSnackBar {
   showSnackBar(BuildContext context,
       {required String message, bool error = false, int duration = 2}) {
+    print("🍔 Showing snackbar with message: $message");
     return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(message),
       margin: const EdgeInsets.all(14),
@@ -13,4 +14,5 @@ mixin ShowSnackBar {
       backgroundColor: error == true ? kRedColor : kGreenColor,
     ));
   }
+
 }

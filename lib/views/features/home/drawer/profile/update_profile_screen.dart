@@ -52,12 +52,14 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen>
   }
 
   updateUser(File file) {
-    if (_updateFormKey.currentState!.validate()) {
+    if ( _updateFormKey.currentState!.validate() ) {
+
       setState(() {
         isUpdating = true;
       });
       AuthRepository().uploadImage(file, updateNameController.text).then(
             (value) async {
+
           await Provider.of<AuthProvider>(context, listen: false)
               .fetchCurrentUser();
           // set locally
@@ -97,24 +99,12 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen>
             child: SafeArea(
               child: Column(
                 children: [
-                  CustomAppBar(widgetName: 'Edit Profile'),
+                  const CustomAppBar(widgetName: 'Edit Profile'),
 
                   Stack(
                     alignment: Alignment.bottomRight,
                     children: [
-                      // SizedBox(
-                      //   height: 200.h,
-                      //   width: 200.h,
-                      //   child: ClipRRect(
-                      //     borderRadius: BorderRadius.circular(100.r),
-                      //     child: pickedFile == null
-                      //         ? Image.network(
-                      //             '$imageUrl/${widget.image}',
-                      //             fit: BoxFit.cover,
-                      //           )
-                      //         : Image.file(File(pickedFile!.path)),
-                      //   ),
-                      // ),
+
 
                       pickedFile == null
                           ? CustomProfileImage(
@@ -139,7 +129,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen>
                           child: Container(
                             decoration: const BoxDecoration(
                                 shape: BoxShape.circle, color: kYellowColor),
-                            child: Icon(
+                            child: const Icon(
                               size: 32,
                               Icons.camera_alt,
                               color: kWhiteColor,
@@ -148,31 +138,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen>
                         ),
                       ),
 
-                      // Positioned(
-                      //   bottom: 0,
-                      //   right: 0,
-                      //   child: InkWell(
-                      //     onTap: () async {
-                      //       pickedFile = await AuthRepository().pickImage();
-                      //
-                      //       if (pickedFile != null) {
-                      //         filePath = pickedFile!.path;
-                      //       }
-                      //       setState(() {});
-                      //     },
-                      //     child: Container(
-                      //       width: 40,
-                      //       height: 40,
-                      //       decoration: BoxDecoration(
-                      //           borderRadius: BorderRadius.circular(100),
-                      //           color: kPrimaryBlueColor),
-                      //       child: Icon(
-                      //         Icons.image,
-                      //         color: kWhiteColor,
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
                     ],
                   ),
                   const SizedBox(height: 60),

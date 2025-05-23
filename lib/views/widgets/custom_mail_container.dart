@@ -124,8 +124,8 @@ class _CustomMailContainerState extends State<CustomMailContainer> with DateConv
                 //TODO : add tags
                 Padding(
                   padding: const EdgeInsetsDirectional.only(start: 24.0),
-                  child: widget.tags.length == 0
-                      ? SizedBox()
+                  child: widget.tags.isEmpty
+                      ? const SizedBox.shrink()
                       : Wrap(children: [
                           for (int i = 0; i < widget.tags.length; i++) ...{
                             Text(
@@ -138,14 +138,14 @@ class _CustomMailContainerState extends State<CustomMailContainer> with DateConv
                           }
                         ]),
                 ),
-                //TODO : get images from constuctor
+                //TODO : get images from constructor
                  SizedBox(
                   height: 6.h,
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.only(start: 24.0),
+                  padding: const EdgeInsetsDirectional.only(start: 24.0),
                   child: Row(children: [
-                    //TODO: Add Gesture detoctor
+                    //TODO: Add Gesture detector
                     for (int i = 0; i < widget.images.length; i++) ...{
                       CustomPhotoContainer(
                         raduis: 48.r,
