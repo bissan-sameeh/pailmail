@@ -63,7 +63,7 @@ This project taught me the importance of writing **clean**, **readable**, and **
 
 > Each small project adds a step for me and brings me closer to the level I aspire to reach. The best thing is that every piece of code I write is a new opportunity to learn and improve myself.
 
-🔗 [Check it on GitHub]([https://lnkd.in/dZyhHrm2](https://www.linkedin.com/feed/update/urn:li:activity:7331405888508850176/))
+🔗 [Check it on LinkedIn ]([https://lnkd.in/dZyhHrm2](https://www.linkedin.com/feed/update/urn:li:activity:7331405888508850176/))
 
 ## 📁 Project Structure
 
