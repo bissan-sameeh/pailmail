@@ -1,16 +1,49 @@
-# pailmail
+# 📧 Mail App (Flutter)
 
-A new Flutter project.
+A smart and modern Mail Application built with Flutter. It features full account management, role-based access, message categorization, and a clean architecture using the MVC pattern and Provider for state management.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 🚀 Features
 
-A few resources to get you started if this is your first Flutter project:
+### 🔐 Authentication
+- User login and registration
+- Update password and username
+- Role management: switch between user/admin
+- Edit user profile information
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### ✉️ Email Management
+- Add new emails with full details
+- View email details in a clean interface
+- Categorize emails based on:
+  - `Pending`
+  - `Inbox`
+  - `Category`
+  - `Completed`
+- Filter emails by status
+- View all mails associated with categories
+- View all mails associated with status
+- Real time: refresh data based on user interaction
+- completely integration betwwn front end and backend(Api)
+- Responsive UI 
+  
+- رهثص 
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### ⚙️ Tech Stack
+- **Flutter** for cross-platform UI
+- **Provider** for efficient state management
+- **MVC Architecture** for clean and scalable code structure
+
+
+
+## 📁 Project Structure
+
+
+lib/
+├── models/         # Data models (email, user, etc.)
+├── views/          # UI screens and widgets
+├── controllers/    # Business logic and app flow
+├── providers/      # State management with Provider
+├── core/           # APIs and data handling
+└── main.dart       # Entry point
+
