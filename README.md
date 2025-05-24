@@ -1,4 +1,4 @@
-# 📧 Mail App (Flutter)
+# 📧 PalMail App (Flutter)
 
 A smart and modern Mail Application built with Flutter. It features full account management, role-based access, message categorization, and a clean architecture using the MVC pattern and Provider for state management.
 
