@@ -14,7 +14,7 @@ This project was a wonderful experience that combined teamwork and technical ski
 
 Here's a preview of the app UI on mobile devices:
 
-![App Mockup](palMail2.png)
+![App Mockup](pal.png)
 
 ## 🚀 Features
 
