@@ -14,7 +14,7 @@ This project was a wonderful experience that combined teamwork and technical ski
 
 Here's a preview of the app UI on mobile devices:
 
-![App Mockup](pal.png)
+![App Mockup](pal.PNG)
 
 ## 🚀 Features
 
@@ -42,8 +42,6 @@ Here's a preview of the app UI on mobile devices:
 - completely integration betwwn front end and backend(Api)
 - Responsive UI
   
-
-- رهثص 
 
 ### ⚙️ Tech Stack
 - **Flutter** for cross-platform UI
