@@ -1,14 +1,6 @@
 # 📧 PalMail App (Flutter)
 
-A smart and modern Mail Application built with Flutter. It features full account management, role-based access, message categorization, and a clean architecture using the MVC pattern and Provider for state management.
-
----
-
-## 🎓 About the Project
-
-I'm so happy to have completed my first integrated project, **PalMail**, as part of my internship with **Gaza Sky Geeks**.
-
-This project was a wonderful experience that combined teamwork and technical skills. I used the API developed by the back-end team and handled everything related to the user interface and data flow.
+A smart and modern mail application built with Flutter, featuring full account management, role-based access, and advanced email organization with a clean and scalable architecture.
 
 ## 📸 App Mockup
 
